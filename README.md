@@ -4,3 +4,6 @@ Remerciement a @Intermarch3
 
 pour installer les dependances : pip install -r requirements.txt
 lancer le processus d'Authentification : python3 login.py
+
+
+agrument: python3 login.py $username $path_to_wordlist
